@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:th ="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	
+	     <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="padding: 1em">
+	<div id="button-menu">
+		<a href="/springBoot/">Home</a> <a href="cadastro">Cadastro</a>
+	</div>
+
+	<form style="margin: auto; width: 30%; margin-top: 10%">
+	
+		<h1 style="text-align: center; color: gray">Cadastre-se</h1>
+	
+		<div class="form-group">
+			<label for="campoId">ID: </label> <input type="number" readonly="readonly"
+				class="form-control" id="campoId"
+				placeholder="O login aparecerá após o cadastro: ">
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="campoLogin">Login: </label> <input type="text"
+					required="required" class="form-control" id="campoLogin"
+					placeholder="Digite o login: ">
+			</div>
+			<div class="form-group col-md-6">
+				<label for="campoSenha">Senha: </label> <input type="password"
+					required="required" class="form-control" id="campoSenha"
+					placeholder="Digite a senha: ">
+			</div>
+			<div class="form-group col-md-6">
+				<label for="campoEmail">Email: </label> <input type="email"
+					required="required" class="form-control" id="campoEmail"
+					placeholder="Digite o email: example@gmail.com">
+			</div>
+			<div class="form-group col-md-6">
+				<label for="campoIdade">Idade: </label> <input type="number"
+					required="required" class="form-control" id="campoIdade"
+					placeholder="Digite a idade:">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="campoCpf">Cpf: </label> <input type="text"
+				required="required" class="form-control" id="campoCpf"
+				placeholder="Digite o cpf: ">
+		</div>
+		<div>
+		  <button type="button" class="btn btn-primary" onclick="cadastrar()">Cadastrar</button>
+		  <button type="button" class="btn btn-info" onclick="this.form.reset()">Novo</button>
+		  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#pesquisaModal">Pesquisar</button>
+		</div>
+	</form>
+	
+	
+	<table class="table" id="usuariosTable" style="width: 50%; margin: auto; margin-top: 2em; background-color: #F5F5F5; box-shadow: 2px 1px 1px gray;">
+  <thead>
+    <tr>
+      <th scope="col">ID: </th>
+      <th scope="col">Login: </th>
+      <th scope="col">Email: </th>
+      <th scope="col">Editar</th>
+      <th scope="col">Excluir</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<!-- Aqui entra javascript carregando a tabela -->
+  </tbody>
+</table>
+
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+		integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+		crossorigin="anonymous"></script>
+		
+		<!-- Modal -->
+<div class="modal fade" id="pesquisaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CaixaAki</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+        <div class="form-group" style="display: flex">
+			<label for="campoPesquisa">Busque algo... </label> <input type="text"
+				 class="form-control" id="campoPesquisa"
+				placeholder="Digite o que deseja: ">
+				<button type="button" class="btn btn-success" onclick="pesquisarUser()">Buscar</button>
+		</div>
+		
+		<table class="table" id="pesquisaTable" style="width: 90%; max-width: 90%; padding: 1em">
+		
+			<thead>
+			  <tr>
+			    <td>ID: </td>
+			    <td>Login: </td>
+			    <td>Email: </td>
+			    <td>Editar: </td>
+			    <td>Excluir: </td>
+			  </tr>
+			</thead>
+			<tbody>
+			
+			</tbody>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+		
+
+	<script>
+	
+		function pesquisarUser(){
+			
+			var login = $('#campoPesquisa').val();
+			
+			$.ajax({
+				method : "GET",
+				url : "pesquisarUserPorLogin",
+				data: "login=" + login,
+				contentType : "application/json; charset=utf-8",
+				success : function(response) {
+					
+					$("#pesquisaTable > tbody > tr").remove()
+					
+				for(var i = 0; i < response.length; i++){
+						 
+						$("#pesquisaTable > tbody").append("<tr id=" + response[i].id + "> <td> " + response[i].id + " </td>  <td><a href='cadastro/telefones.html?idUser='" + response[i].id+ "'> " + response[i].login + " </a></td>  <td style='width: 10px; overflow: hidden'> " + response[i].email + ' </td>  <td> <button type="text" class="btn btn-success" onclick="editarUsuario(' + response[i].id + ')">Editar</button></td> <td> <button type="text" class="btn btn-danger" onclick="deletarUsuario(' + response[i].id + ')">Excluir</button></td> </tr>');
+					}
+				}
+			}).fail(function(xhr, status, errorThrown) {
+				alert("Erro ao carregar usuarios: " + xhr.responseText);
+			});
+		}
+		
+		function listarTodos(){
+			
+			$.ajax({
+				method : "GET",
+				url : "listaUsers",
+				contentType : "application/json; charset=utf-8",
+				success : function(response) {
+					
+					for(var i = 0; i < response.length; i++){
+						
+						$("#usuariosTable > tbody").append("<tr id=" + response[i].id + "> <td> " + response[i].id + " </td>  <td> <a href='cadastro/telefones.html?idUser=" + response[i].id + "'>" + response[i].login + " </td>  </a><td> " + response[i].email + ' </td>  <td> <button type="text" class="btn btn-success" onclick="editarUsuario(' + response[i].id + ')">Editar</button></td> <td> <button type="text" class="btn btn-danger" onclick="deletarUsuario(' + response[i].id + ')">Excluir</button></td> </tr>');
+					}
+				}
+			}).fail(function(xhr, status, errorThrown) {
+				alert("Erro ao carregar usuarios: " + xhr.responseText);
+			});
+		}
+		
+		listarTodos();
+		
+		function deletarUsuario(id){
+			
+			$.ajax({
+				method : "GET",
+				url : "deletarUser",
+				data: "idUser=" + id,
+				contentType : "application/json; charset=utf-8",
+				success : function() {
+					alert("Deletado com sucesso");	
+					$('#usuariosTable > tbody #' + id).remove()
+				}
+			}).fail(function(xhr, status, errorThrown) {
+				alert("Erro ao deletar usuario: " + xhr.responseText);
+			});
+		}
+		
+		function editarUsuario(id){
+			
+			$.ajax({
+				method : "GET",
+				url : "pesquisarUser",
+				data: "idUser=" + id,
+				contentType : "application/json; charset=utf-8",
+				success : function(response) {
+					
+					id = $('#campoId').val(response.id);
+					login = $('#campoLogin').val(response.login);
+				 	email = $('#campoEmail').val(response.email);
+					idade = $('#campoIdade').val(response.idade);
+					cpf = $('#campoCpf').val(response.cpf);
+				}
+			}).fail(function(xhr, status, errorThrown) {
+				alert("Erro ao carregar usuarios: " + xhr.responseText);
+			});
+		}
+	
+		function cadastrar() {
+
+			var id = $('#campoId').val();
+			var login = $('#campoLogin').val();
+			var senha = $('#campoSenha').val();
+			var email = $('#campoEmail').val();
+			var idade = $('#campoIdade').val();
+			var cpf = $('#campoCpf').val();
+
+			if(login != null && senha != null && email != null && idade != null && cpf != null && login.trim() != '' && senha.trim() != '' && email.trim() != '' && cpf.trim() != ''){
+				$.ajax({
+					method : "POST",
+					url : "salvar",
+					data : JSON.stringify({
+						id : id,
+						login : login,
+						senha : senha,
+						email : email,
+						idade : idade,
+						cpf : cpf
+					}),
+					contentType : "application/json; charset=utf-8",
+					success : function(response) {
+						$("#campoId").val(response.id);
+						alert("Gravou com sucesso!");
+						$("#usuariosTable > tbody").append("<tr id='" + response.id + "'><td>" + response.id + "</td> <td>" + login + "</td> <td>" + email + "</td> <td> <button type='text' class='btn btn-success' onclick='editarUsuario(" + response.id + ")'>Editar</button></td> <td> <button type='text' class='btn btn-danger' onclick='deletarUsuario(" + response.id + ")'>Excluir</button></td> </tr>");
+					}
+				}).fail(function(xhr, status, errorThrown) {
+					alert("Erro ao salvar usuario: " + xhr.responseText);
+				});
+			}else{
+				
+				alert('Não deixe campos vazios!');
+				return;
+			}
+		}
+	</script>
+</body>
+</html>

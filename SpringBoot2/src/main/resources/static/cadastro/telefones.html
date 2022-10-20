@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:th ="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	
+	     <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="padding: 1em">
+	<div id="button-menu">
+		<a href="/springBoot/">Home</a> <a href="../cadastro">Cadastro</a>
+	</div>
+
+	<form style="margin: auto; width: 30%; margin-top: 10%">
+	
+		<h1 style="text-align: center; color: gray">Telefones</h1>
+	
+		<div class="form-group">
+			<label for="campoId">ID: </label> <input type="number" readonly="readonly"
+				class="form-control" id="campoId"
+				>
+		</div>
+		
+		<div class="form-group">
+			<label for="campoId">Login: </label> <input type="text" readonly="readonly"
+				class="form-control" id="campoLogin"
+				>
+		</div>
+		
+		<div class="form-group">
+			<label for="campoTipo">Tipo: </label> <input type="text" placeholder="ex: celular, telefone..."
+				class="form-control" id="campoTipo" required="required"
+				>
+		</div>
+		
+		<div class="form-group">
+			<label for="campoNumero">Número: </label> <input type="text" placeholder="Digite o seu número"
+				class="form-control" id="campoNumero" required="required"
+				>
+		</div>
+		
+		<div>
+		  <button type="button" class="btn btn-primary" onclick="salvarTelefone()">Salvar</button>
+		  <button type="button" class="btn btn-info" onclick="this.form.reset()">Novo</button>
+		</div>
+	</form>
+	
+	
+	<table class="table" id="TelefonesTable" style="width: 50%; margin: auto; margin-top: 2em; background-color: #F5F5F5; box-shadow: 2px 1px 1px gray;">
+  <thead>
+    <tr>
+      <th scope="col">ID </th>
+      <th scope="col">Tipo </th>
+      <th scope="col">Número </th>
+      <th scope="col">Editar</th>
+      <th scope="col">Excluir</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<!-- Aqui entra javascript carregando a tabela -->
+  </tbody>
+</table>
+
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+		integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+		crossorigin="anonymous"></script>
+		
+		
+
+	<script>
+	
+	function salvarTelefone(){
+		// armazenamos os parâmetros da url
+		var idUser = $('#campoId').val();
+		var tipo = $('#campoTipo').val();
+		var numero = $('#campoNumero').val();
+		
+		$.ajax({
+			method : "POST",
+			url : "../salvarTelefone?idUser=" + idUser,
+			data: JSON.stringify({
+				
+				numero : numero,
+				tipo : tipo,
+			}),
+			contentType : "application/json; charset=utf-8",
+			success : function(response) {
+				
+				alert('Telefone salvo com sucesso');
+			}
+		}).fail(function(xhr, status, errorThrown) {
+			alert("Erro ao salvar telefone: " + xhr.responseText);
+		});
+	}
+	
+	function auxiliar(){
+		
+		var urlParams = new URLSearchParams(window.location.search);
+		var idUser = urlParams.get("idUser");
+		
+		var campoId = $('#campoId').val(idUser);
+		
+		var login = $('#campoPesquisa').val();
+		
+		$.ajax({
+			method : "GET",
+			url : "../pesquisarUser",
+			data: "idUser=" + idUser,
+			contentType : "application/json; charset=utf-8",
+			success : function(response) {
+				
+				$('#campoLogin').val(response.login);
+			}
+		}).fail(function(xhr, status, errorThrown) {
+			alert("Erro ao carregar usuarios: " + xhr.responseText);
+		});
+	}
+	
+	auxiliar();
+	</script>
+</body>
+</html>
